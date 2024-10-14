@@ -12,7 +12,7 @@ app.use(express.json());
 
 ("/posts/fd54fgdg4654d56fh4d");
 
-app.post("/", (req: express.Request, res: express.Response) => {
+app.post("/users", (req: express.Request, res: express.Response) => {
   log("authorization service", req.body);
   const { role, method, path } = req.body;
 
