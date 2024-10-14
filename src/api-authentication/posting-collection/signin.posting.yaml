@@ -1,0 +1,12 @@
+name: signin
+method: POST
+url: http://localhost:3010/api/signin
+body:
+  content: |-
+    {
+      "email":"gandalf@istari.org",
+      "password":"sauron est vilain !"
+    }
+headers:
+- name: Content-Type
+  value: application/json

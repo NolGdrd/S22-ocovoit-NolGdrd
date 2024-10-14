@@ -1,0 +1,11 @@
+name: Update one user
+method: PUT
+url: http://localhost:3000/api/users/4
+body:
+  content: |-
+    {
+      "image":"http:/oclock.io/tobin_abasi.png"
+    }
+headers:
+- name: Content-Type
+  value: application/json

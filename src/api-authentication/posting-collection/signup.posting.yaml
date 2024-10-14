@@ -1,0 +1,14 @@
+name: signup
+method: POST
+url: http://localhost:3010/api/signup
+body:
+  content: |-
+    {
+      "lastname": "Le gris",
+      "firstname": "Gandalf",
+      "email": "gandalf@istari.org",
+      "password": "sauron est vilain !"
+    }
+headers:
+- name: Content-Type
+  value: application/json

@@ -1,0 +1,14 @@
+name: Create one user
+method: POST
+url: http://localhost:3000/api/users
+body:
+  content: |-
+    {
+      "lastname": "Abasi",
+      "firstname": "Tobin",
+      "email": "tobin@animals.as.leaders.org",
+      "password": "2HUiowYxnEFDHHefWqanmKthdVL8CJFD"
+    }
+headers:
+- name: Content-Type
+  value: application/json

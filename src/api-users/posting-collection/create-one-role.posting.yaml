@@ -1,0 +1,11 @@
+name: Create one role
+method: POST
+url: http://localhost:3000/api/roles
+body:
+  content: |-
+    {
+      "name": "partner"
+    }
+headers:
+- name: Content-Type
+  value: application/json

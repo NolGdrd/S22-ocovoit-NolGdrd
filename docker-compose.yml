@@ -1,0 +1,79 @@
+services:
+  api-users:
+    container_name: api-users
+    build:
+      context: .
+      dockerfile: ./src/api-users/Dockerfile
+    volumes:
+      - ./src/api-users:/app
+    ports:
+      - 3000:3000
+    environment:
+      PGDATABASE: ${PG_DATABASE}
+      PGUSER: ${PG_USER}
+      PGPASSWORD: ${PG_PASSWORD}
+      PGHOST: user-db
+      PGPORT: 5432
+    depends_on:
+      - user-db
+    command: ["bash", "-c", "./wait-for-it.sh user-db:5432 -- npm run dev"]
+    restart: unless-stopped
+
+  api-authentication:
+    container_name: api-authentication
+    build:
+      context: .
+      dockerfile: ./src/api-authentication/Dockerfile
+    volumes:
+      - ./src/api-authentication:/app
+    ports:
+      - 3010:3000
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      SCRYPT_SECRET: ${SCRYPT_SECRET}
+      API_USERS_URL: http://api-users:3000
+    depends_on:
+      - api-users
+    command: ["bash", "-c", "./wait-for-it.sh user-db:5432 -- npm run dev"]
+    restart: unless-stopped
+
+  api-authorization:
+    container_name: api-authorization
+    build:
+      context: .
+      dockerfile: ./src/api-authorization/Dockerfile
+    volumes:
+      - ./src/api-authorization:/app
+    ports:
+      - 3020:3000
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      API_AUTHENTICATION_URL: http://api-authentication:3010
+      API_USERS_URL: http://api-users:3000
+    depends_on:
+      - api-authentication
+    command: ["bash", "-c", "./wait-for-it.sh user-db:5432 -- npm run dev"]
+    restart: unless-stopped
+
+  user-db:
+    image: postgres
+    container_name: user-db
+    restart: always
+    environment:
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: ${PG_DATABASE}
+    ports:
+      - "5434:5432"
+    volumes:
+      - ./src/init-user-db:/docker-entrypoint-initdb.d
+      - ./pg-data:/var/lib/postgresql/data
+
+  adminer:
+    image: adminer
+    container_name: adminer-db
+    restart: always
+    ports:
+      - 4000:8080
+    depends_on:
+      - user-db

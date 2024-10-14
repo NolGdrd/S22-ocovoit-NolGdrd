@@ -1,0 +1,11 @@
+name: Update one role
+method: PUT
+url: http://localhost:3000/api/roles/4
+body:
+  content: |-
+    {
+      "name": "friend"
+    }
+headers:
+- name: Content-Type
+  value: application/json

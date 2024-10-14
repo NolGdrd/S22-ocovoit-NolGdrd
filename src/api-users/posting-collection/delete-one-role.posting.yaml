@@ -1,0 +1,3 @@
+name: Delete one role
+method: DELETE
+url: http://localhost:3000/api/roles/4
