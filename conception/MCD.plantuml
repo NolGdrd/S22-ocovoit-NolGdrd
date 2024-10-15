@@ -1,0 +1,15 @@
+@startuml MCD
+
+ROLE: id, name
+HAS, 0N USER, 0N ROLE
+
+
+USER: id, firstname, lastname, email, password
+
+
+CREATES, 0N USER, 11 TRIP
+RATES, 0N USER, 0N TRIP: rate, comment
+BOOKS, 0N USER, 0N TRIP: seats_booked, booking_status
+
+
+TRIP: id, start_location, end_location, departure_time, available_seats

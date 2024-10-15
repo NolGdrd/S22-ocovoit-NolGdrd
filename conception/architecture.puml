@@ -1,0 +1,31 @@
+@startuml architecture
+' skinparam linetype ortho
+
+node "Frontend" {
+  component Client [
+    Frontend
+    React TS
+  ]
+}
+
+node "Backend" {
+  component APIUsers [
+    API Users & Roles
+    ExpressJS
+  ]
+  database "PostgreSQL"
+
+  component APIBusiness [
+    API Business
+    ExpressJS
+  ]
+  database "MongoDB"
+
+  [APIUsers] -- [PostgreSQL]
+  [APIBusiness] -- [MongoDB]
+}
+
+Client -- [APIUsers]
+Client -- [APIBusiness]
+
+@enduml
